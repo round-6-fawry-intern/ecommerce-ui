@@ -1,0 +1,16 @@
+<div class="column gap-1">
+  <div class="row wrap gap-1 space-between">
+    <!-- <app-product *ngFor="let product of products" [product]="product" (productoutput)="onProductOutput($event)"></app-product> -->
+<!-- <app-product *ngFor="let product of products" [product]="product"></app-product> -->
+<div class="row">
+
+  @for (item of productList; track $index) {
+  <div class="col-md-12 col-lg-3 pt-2 mb-4 mb-lg-0">
+      <app-product [product]="item"></app-product>
+  </div>
+  }
+</div>
+  </div>
+
+
+</div>

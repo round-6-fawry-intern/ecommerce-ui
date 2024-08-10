@@ -1,0 +1,63 @@
+/* Basic Reset and Box Sizing */
+* {
+  box-sizing: border-box;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background-color: #fff; /* Adjust background color as needed */
+  border-bottom: 1px solid #ddd; /* Optional: Add a border at the bottom */
+}
+
+.logo {
+  height: 40px; /* Adjust size as needed */
+}
+
+.row {
+  display: flex;
+  align-items: center;
+}
+
+.cart-icon {
+  position: fixed; /* Position relative to the viewport */
+  right: 20px; /* Adjust to place it as needed */
+  top: 20px; /* Adjust to place it as needed */
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  z-index: 1000; /* Ensure it stays on top of other elements */
+}
+.cart-image {
+  height: 24px; /* Adjust size as needed */
+}
+
+.cart-count {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: #e67e22; /* Cart count background color */
+  color: #fff;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .cart-icon {
+    margin-top: 10px;
+  }
+}
