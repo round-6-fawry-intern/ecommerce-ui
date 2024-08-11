@@ -19,22 +19,6 @@ export class HomeComponent {
   products: Product[] = [];
   totalRecords = 0;
 
-
-  productList = [
-    {
-      productId: 1,
-      rating: 0,
-      isOffer: false,
-      productName: 'Hp Notebook',
-      category: 'Laptop',
-      price: 1000,
-      discount: 12,
-      availableQty: 3,
-      imageUrl:
-        'https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/1.webp',
-    }
-  ]
-
   constructor(private productsService: ProductsService) {}
 
   ngOnInit() {

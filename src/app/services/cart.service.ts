@@ -24,4 +24,7 @@ export class CartService {
     this.cartItems = [];
     this.cartItemsSubject.next(this.cartItems);
   }
+
+  
+
 }

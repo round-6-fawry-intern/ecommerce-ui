@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CartService } from '../../services/cart.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-cart',
@@ -16,7 +17,10 @@ export class CartComponent implements OnInit {
   couponCode: string = '';
   discount: number = 0;
 
-  constructor(private cartService: CartService) {}
+  constructor(
+    private cartService: CartService,
+    private apiService: ApiService
+  ) {}
 
   ngOnInit() {
     this.cartService.getCart().subscribe((items) => {
@@ -30,12 +34,18 @@ export class CartComponent implements OnInit {
   }
 
   applyCoupon() {
-    // Basic coupon logic (e.g., 10% discount)
-    if (this.couponCode === 'DISCOUNT10') {
-      this.discount = this.totalPrice * 0.1;
-    } else {
-      this.discount = 0;
-    }
+    this.apiService
+      .calculateDiscount(this.totalPrice, this.couponCode)
+      .subscribe(
+        (discountedAmount) => {
+        console.log(discountedAmount);
+          this.discount = this.totalPrice - discountedAmount;
+        },
+        (error) => {
+          console.error('Failed to apply coupon', error);
+          this.discount = 0;
+        }
+      );
   }
 
   closeCart() {
@@ -43,11 +53,11 @@ export class CartComponent implements OnInit {
     // This might involve setting cartOpen to false in the parent component
   }
 
-  getTotalPrice():number {
+  getTotalPrice(): number {
     return this.cartItems.reduce((total, item) => total + item.price, 0);
   }
 
-  delete(index:number){
-    this.cartItems.splice(index,1);
+  delete(index: number) {
+    this.cartItems.splice(index, 1);
   }
 }
