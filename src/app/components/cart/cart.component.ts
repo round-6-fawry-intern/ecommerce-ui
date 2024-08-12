@@ -3,6 +3,7 @@ import { CartService } from '../../services/cart.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../../services/api.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cart',
@@ -16,10 +17,12 @@ export class CartComponent implements OnInit {
   totalPrice: number = 0;
   couponCode: string = '';
   discount: number = 0;
+  showCart:boolean=true;
 
   constructor(
     private cartService: CartService,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -59,5 +62,10 @@ export class CartComponent implements OnInit {
 
   delete(index: number) {
     this.cartItems.splice(index, 1);
+  }
+
+  navigateToPage(): void {
+    this.router.navigate(['/order-page']);
+    this.showCart=false;
   }
 }
