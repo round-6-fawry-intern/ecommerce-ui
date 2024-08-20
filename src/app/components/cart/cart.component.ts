@@ -17,7 +17,7 @@ export class CartComponent implements OnInit {
   totalPrice: number = 0;
   couponCode: string = '';
   discount: number = 0;
-  showCart:boolean=true;
+  showCart: boolean = true;
 
   constructor(
     private cartService: CartService,
@@ -41,7 +41,7 @@ export class CartComponent implements OnInit {
       .calculateDiscount(this.totalPrice, this.couponCode)
       .subscribe(
         (discountedAmount) => {
-        console.log(discountedAmount);
+          console.log(discountedAmount);
           this.discount = this.totalPrice - discountedAmount;
         },
         (error) => {
@@ -65,7 +65,11 @@ export class CartComponent implements OnInit {
   }
 
   navigateToPage(): void {
-    this.router.navigate(['/order-page']);
-    this.showCart=false;
+    this.router.navigate(['/order-page'], {
+      state: {
+        cartItems: this.cartItems,
+        couponCode: this.couponCode,
+      },
+    });
   }
 }

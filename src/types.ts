@@ -54,3 +54,16 @@ export interface PaginationsParams {
   page: number;
   perPage: number;
 }
+
+export interface OrderRequest {
+  couponCode: string;
+  customerEmail: string;
+  cardNumber: string;
+  items: Item[];
+}
+
+interface Item {
+  productId: number;
+  storeId: number;
+  quantity: number;
+}
