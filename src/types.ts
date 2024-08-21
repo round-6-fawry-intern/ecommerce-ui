@@ -58,7 +58,7 @@ export interface PaginationsParams {
 export interface OrderRequest {
   couponCode: string;
   customerEmail: string;
-  cardNumber: string;
+  CardNumber: string;
   items: Item[];
 }
 

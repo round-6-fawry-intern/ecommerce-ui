@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Injectable, OnInit } from '@angular/core';
 import { CartService } from '../../services/cart.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../../services/api.service';
 import { Router } from '@angular/router';
+import { OrderStateService } from '../../services/order-state-service.service';
 
 @Component({
   selector: 'app-cart',
@@ -20,6 +21,7 @@ export class CartComponent implements OnInit {
   showCart: boolean = true;
 
   constructor(
+    private orderStateService: OrderStateService,
     private cartService: CartService,
     private apiService: ApiService,
     private router: Router
@@ -65,11 +67,12 @@ export class CartComponent implements OnInit {
   }
 
   navigateToPage(): void {
-    this.router.navigate(['/order-page'], {
-      state: {
-        cartItems: this.cartItems,
-        couponCode: this.couponCode,
-      },
+    this.orderStateService.setOrderState({
+      cartItems: this.cartItems,
+      couponCode: this.couponCode,
     });
+
+    console.log(this.cartItems);
+    this.router.navigate(['/order-page']);
   }
 }

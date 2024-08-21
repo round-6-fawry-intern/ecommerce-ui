@@ -3,6 +3,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiService } from '../../services/api.service';
 import { OrderRequest } from '../../../types';
+import { OrderStateService } from '../../services/order-state-service.service';
 
 @Component({
   selector: 'app-form-order',
@@ -17,19 +18,18 @@ export class FormOrderComponent {
   customerEmail: string = '';
   cardNumber: string = '';
 
-  constructor(private router: Router, private apiService: ApiService) {}
+  constructor(
+    private orderStateService: OrderStateService,
+    private router: Router,
+    private apiService: ApiService
+  ) {}
 
   ngOnInit() {
-    const navigation = this.router.getCurrentNavigation();
-    const state = navigation?.extras.state as {
-      cartItems: any[];
-      couponCode: string;
-    };
+    const state = this.orderStateService.getOrderState();
+    this.cartItems = state.cartItems || [];
+    this.couponCode = state.couponCode || '';
 
-    if (state) {
-      this.cartItems = state.cartItems || [];
-      this.couponCode = state.couponCode || '';
-    }
+    console.log('Cart Items:', this.cartItems); // Debugging line
   }
 
   onSubmit(form: NgForm) {
@@ -37,15 +37,19 @@ export class FormOrderComponent {
       const orderData: OrderRequest = {
         couponCode: this.couponCode,
         customerEmail: this.customerEmail,
-        cardNumber: this.cardNumber,
-        items: this.cartItems.map((item) => ({
-          productId: item.productId,
-          storeId: item.storeId,
-          quantity: 1, // Adjust quantity based on your logic
-        })),
+        CardNumber: this.cardNumber,
+        items: this.cartItems.map((item) => {
+          console.log(item);
+          return {
+            productId: item.id,
+            storeId: 1,
+            quantity: 1, // Adjust quantity based on your logic
+          };
+        }),
       };
-
-      this.apiService.orderNow(orderData);
+      console.log(orderData);
+      console.log('FUCCCCCCCCCCCCCCCCCCCCk');
+      this.apiService.orderNow(orderData).subscribe((res) => console.log(res));
     }
   }
 }
