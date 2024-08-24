@@ -1,38 +1,36 @@
 
-<table class="table table-success" style="width: 100px;" >
+<table class="cart-table">
   <tbody>
     @for (item of cartItems; track $index) {
-    <tr>
-      <td>
-        <div class="rounded"
-          style="background-image: url({{item.imageUrl}}); background-size: cover; height: 50px; width: 50px;">
+      <td class="item-image-cell">
+        <div class="item-image" style="background-image: url({{item.imageUrl}}); background-size: cover;">
         </div>
       </td>
-      <td class="align-middle text-left">{{item.productName}}</td>
-      <td class="align-middle text-right">${{item.price}}</td>
-      <td class="align-middle text-center"><a (click)="delete($index)" data-toggle="modal"
-          data-title="Delete your product ?"><i class="fa fa-trash"></i></a></td>
-    </tr>
+      <td class="item-name-cell">{{item.productName}}</td>
+      <td class="item-price-cell">${{item.price}}</td>
+      <td class="item-action-cell">
+        <a (click)="delete($index)" data-toggle="modal" data-title="Delete your product?">
+          <i class="fa fa-trash"></i>
+        </a>
+      </td>
     }
-    <tr>
-      <td colspan="3" class="align-middle text-right">Quantity</td>
-      <td class="align-middle text-right">{{cartItems.length}}</td>
+    <tr class="cart-quantity-row">
+      <td colspan="3" class="text-right">Quantity</td>
+      <td class="text-right">{{cartItems.length}}</td>
     </tr>
-    <tr>
-      <td class="cart-summary">
+    <tr class="cart-summary-row">
+      <td colspan="4" class="cart-summary">
         <h4>Total: ${{ getTotalPrice() }}</h4>
         <div class="coupon-section">
           <input type="text" [(ngModel)]="couponCode" placeholder="Enter coupon code" />
           <button (click)="applyCoupon()">Apply Coupon</button>
         </div>
-        <div *ngIf="discount > 0">
+        <div *ngIf="discount > 0" class="discount-info">
           <h5>Discount Applied: -${{ discount.toFixed(2) }}</h5>
           <h3>Final Total: ${{ (totalPrice - discount).toFixed(2) }}</h3>
         </div>
-      </td>
-      <td colspan="3">
-        <div style="margin-top: 35px;">
-          <button (click)="navigateToPage()" >Order Now</button>
+        <div class="custom-button-container">
+          <button (click)="navigateToPage()">Order Now</button>
         </div>
       </td>
     </tr>
